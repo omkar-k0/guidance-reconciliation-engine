@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guidance Reconciliation Engine</title>
+<meta name="description" content="Does company revenue guidance hold up? A confidence-gated rule + LLM system over SEC EDGAR, with citations on every decision.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="wrap">
+  <p class="eyebrow">SEC EDGAR · revenue guidance · v1</p>
+  <h1>Did they hit their own number?</h1>
+  <p class="lede">Companies tell investors what revenue to expect next quarter. This engine reads that guidance, finds what was actually reported, and labels each one <b>MET</b>, <b>MISSED</b>, <b>RESTATED</b> or <b>UNVERIFIABLE</b>. Rules handle the clean cases. An LLM only judges the ambiguous rest, and it must quote the filing or its answer is withheld.</p>
+</header>
+
+<main class="wrap">
+  <section id="metrics" class="metrics" aria-label="Headline numbers"></section>
+
+  <section class="how">
+    <h2>How a decision is made</h2>
+    <ol class="flow">
+      <li><span>1</span><div><b>Extract</b> guidance sentences from the earnings release (8-K, EX-99.1) and parse the range.</div></li>
+      <li><span>2</span><div><b>Match</b> the next reported quarter from XBRL company facts. Q4 is derived as full year minus nine months.</div></li>
+      <li><span>3</span><div><b>Rule layer</b> labels it and scores its own confidence. Every deduction is written down.</div></li>
+      <li><span>4</span><div><b>Gate.</b> Above the threshold, the rule decision stands. Below it, the case goes to the LLM.</div></li>
+      <li><span>5</span><div><b>LLM</b> returns a typed decision with exact quotes. Quotes not found in the filing are dropped. No valid quote, no label.</div></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="bar">
+      <h2>Decisions</h2>
+      <div class="filters" role="group" aria-label="Filter">
+        <select id="f-ticker" aria-label="Company"><option value="">All companies</option></select>
+        <select id="f-label" aria-label="Label"><option value="">All labels</option><option>MET</option><option>MISSED</option><option>RESTATED</option><option>UNVERIFIABLE</option></select>
+        <select id="f-route" aria-label="Route"><option value="">Rule and LLM</option><option value="rule">Rule only</option><option value="llm">LLM only</option></select>
+      </div>
+    </div>
+    <div id="empty" class="empty" hidden>
+      <p><b>No results published yet.</b> The pipeline runs locally on SEC data; results appear here after the first labelled run. Nothing on this page is simulated.</p>
+    </div>
+    <div id="list" class="list"></div>
+  </section>
+
+  <section class="notes">
+    <h2>Evidence labels</h2>
+    <p>Every number on this page is tagged: <span class="tag measured">measured</span> on hand-labelled items, or <span class="tag pending">pending</span> until enough items are labelled to say anything.</p>
+    <h2>Known limits</h2>
+    <ul>
+      <li>v1 covers total revenue only, for 11 large-cap US tech companies.</li>
+      <li>“Next quarter” is assumed when the release doesn't name the period; those cases lose confidence and are escalated.</li>
+      <li>A beat counts as MET. The label says whether the floor held, not by how much.</li>
+      <li>Model confidence is not trusted raw. The gate threshold is calibrated on labelled data.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Built by Omkar Khadilkar · <a href="https://github.com/omkar-k0">GitHub</a> · Data: SEC EDGAR (public domain)</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
