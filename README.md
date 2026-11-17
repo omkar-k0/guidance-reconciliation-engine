@@ -2,7 +2,7 @@
 
 **Did companies hit their own revenue guidance?** This engine reads forward-looking revenue guidance from SEC earnings releases, finds what was actually reported, and labels each item **MET**, **MISSED**, **RESTATED** or **UNVERIFIABLE**, with a confidence score and exact citations.
 
-Live demo: _not deployed yet_ · Case study: _coming after v1 results_
+Live demo: **[guidance-reconciliation-engine.vercel.app](https://guidance-reconciliation-engine.vercel.app)** · Case study: _coming after the hand-labelled eval_
 
 ## The idea: confidence gating
 
@@ -25,12 +25,13 @@ Most cases are routine and a few transparent rules get them right. Only the ambi
 
 | Figure | Value | Evidence |
 | --- | --- | --- |
-| Guidance items processed | – | pending |
-| Escalation rate to LLM | – | pending |
+| Guidance items processed | 188 (11 companies) | run count, `site/data/results.json` |
+| Labels from the run | 173 MET · 3 MISSED · 12 UNVERIFIABLE | run count, `site/data/results.json` |
+| Escalation rate to LLM | 3.7% (7 of 188) | run count, `site/data/results.json` |
 | Accuracy vs hand labels | – | pending |
 | Rule-layer accuracy above threshold | – | pending |
 
-Every figure is tagged **measured** (on hand-labelled items), or **pending**. Nothing here is simulated.
+Every figure is tagged **run count** (what the system output, not whether it was right), **measured** (on hand-labelled items), or **pending**. Accuracy stays pending until the blind labelling sheet is filled. Nothing here is simulated.
 
 ## Label definitions (v1)
 
