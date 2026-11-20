@@ -23,14 +23,29 @@ Most cases are routine and a few transparent rules get them right. Only the ambi
 
 ## Results
 
+Run of 24 Oct 2026: 185 earnings releases from 11 US tech companies, January 2022 to October 2026. Scored on 20 Nov 2026 against 188 blind hand labels (`data/labels/worksheet.csv`, one labeller) with `gre eval` (`data/processed/eval.json`).
+
 | Figure | Value | Evidence |
 | --- | --- | --- |
-| Guidance items processed | – | pending |
-| Escalation rate to LLM | – | pending |
-| Accuracy vs hand labels | – | pending |
-| Rule-layer accuracy above threshold | – | pending |
+| Guidance items processed | 188 | measured |
+| Escalation rate to LLM | 3.7% (7 of 188) | measured |
+| Accuracy vs hand labels | 97.9% (184 of 188) | measured |
+| Baseline: label everything MET | 91.5% (172 of 188) | measured |
+| Rule layer, confidence ≥ 0.95 | 100% (110 of 110) | measured |
+| Rule layer, confidence 0.75–0.95 | 95.8% (68 of 71) | measured |
+| LLM-decided items | 85.7% (6 of 7) | measured |
+| Calibration error (ECE), rule layer | 0.062 → 0.009 after temperature scaling (T = 0.45) | measured |
 
-Every figure is tagged **measured** (on hand-labelled items), or **pending**. Nothing here is simulated.
+Gold labels: 172 MET, 2 MISSED, 14 UNVERIFIABLE. On the 16 items that are not plain MET, the engine got 13 right.
+
+The 4 errors:
+
+- 3 extra items the extractor created from a second dollar figure in the same release (Cisco full-year revenue, Broadcom full-year AI revenue, a Broadcom buyback). The rules gave each a confident MET or MISSED at 0.80–0.85. Fix: one quarterly total-revenue item per release.
+- 1 AMD item (October 2024) the LLM declined as UNVERIFIABLE because of a wrong period label from the extractor. The hand label is MET. A refusal, not a wrong answer, but it counts against accuracy.
+
+Not yet applied: the calibrated threshold (0.711 on the scaled score for 95% precision). It needs a second labeller and more companies first.
+
+Every figure is tagged **measured** (on hand-labelled items) or **pending**. Nothing here is simulated.
 
 ## Label definitions (v1)
 
