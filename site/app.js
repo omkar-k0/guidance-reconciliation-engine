@@ -18,8 +18,8 @@ function renderMetrics(results, ev) {
   const html = [
     metric(n || "0", "guidance items processed", n > 0),
     metric(n ? `${Math.round((llm / n) * 100)}%` : "–", "escalated to the LLM", n > 0),
-    metric(ev ? `${Math.round(ev.accuracy * 100)}%` : "–", ev ? `accuracy on ${ev.n_labelled} hand-labelled items` : "accuracy vs hand labels", !!ev),
-    metric(ev?.by_route?.rule ? `${Math.round(ev.by_route.rule.accuracy * 100)}%` : "–", "accuracy when rules decide", !!ev?.by_route?.rule),
+    metric(ev ? `${(ev.accuracy * 100).toFixed(1)}%` : "–", ev ? `accuracy on ${ev.n_labelled} hand-labelled items` : "accuracy vs hand labels", !!ev),
+    metric(ev?.by_route?.rule ? `${(ev.by_route.rule.accuracy * 100).toFixed(1)}%` : "–", "accuracy when rules decide", !!ev?.by_route?.rule),
   ];
   $("#metrics").innerHTML = html.join("");
 }
