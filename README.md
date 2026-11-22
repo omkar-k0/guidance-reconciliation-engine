@@ -2,7 +2,7 @@
 
 **Did companies hit their own revenue guidance?** This engine reads forward-looking revenue guidance from SEC earnings releases, finds what was actually reported, and labels each item **MET**, **MISSED**, **RESTATED** or **UNVERIFIABLE**, with a confidence score and exact citations.
 
-Live demo: _not deployed yet_ · Case study: _coming after v1 results_
+Live demo: **[guidance-reconciliation-engine.vercel.app](https://guidance-reconciliation-engine.vercel.app)** · Case study: _coming after the hand-labelled eval_
 
 ## The idea: confidence gating
 
