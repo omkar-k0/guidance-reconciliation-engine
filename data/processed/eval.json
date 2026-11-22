@@ -1,0 +1,35 @@
+{
+ "n_labelled": 188,
+ "accuracy": 0.979,
+ "by_route": {
+  "rule": {
+   "n": 181,
+   "accuracy": 0.983
+  },
+  "llm": {
+   "n": 7,
+   "accuracy": 0.857
+  }
+ },
+ "escalation_rate": 0.037,
+ "gold_distribution": {
+  "MET": 172,
+  "MISSED": 2,
+  "UNVERIFIABLE": 14
+ },
+ "confusion": {
+  "MET->MET": 171,
+  "MISSED->MISSED": 2,
+  "UNVERIFIABLE->UNVERIFIABLE": 11,
+  "MET->UNVERIFIABLE": 1,
+  "UNVERIFIABLE->MET": 2,
+  "UNVERIFIABLE->MISSED": 1
+ },
+ "rule_calibration": {
+  "temperature": 0.45,
+  "ece_before": 0.062,
+  "ece_after": 0.009,
+  "suggested_threshold_scaled": 0.711,
+  "target_precision": 0.95
+ }
+}
